@@ -163,11 +163,13 @@ internal fun GrpcResponse.grpcResponseToException(suppressed: IOException? = nul
   val grpcMessage = trailers["grpc-message"] ?: header("grpc-message")
 
   if (transportException != null) {
-    return IOException(
+    val grpcStatusInt = grpcStatus?.toIntOrNull()
+      ?: throw IOException(
         "gRPC transport failure" +
             " (HTTP status=$code, grpc-status=$grpcStatus, grpc-message=$grpcMessage)",
         transportException
-    )
+      )
+    return GrpcException(GrpcStatus.get(grpcStatusInt), grpcMessage, trailers)
   }
 
   if (grpcStatus != "0") {
@@ -177,7 +179,7 @@ internal fun GrpcResponse.grpcResponseToException(suppressed: IOException? = nul
               " (HTTP status=$code, grpc-status=$grpcStatus, grpc-message=$grpcMessage)"
       )
 
-    return GrpcException(GrpcStatus.get(grpcStatusInt), grpcMessage)
+    return GrpcException(GrpcStatus.get(grpcStatusInt), grpcMessage, trailers)
   }
 
   return null // Success.

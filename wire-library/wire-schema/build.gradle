@@ -1,56 +1,56 @@
 apply plugin: 'org.jetbrains.kotlin.multiplatform'
 
 kotlin {
-  jvm {
-    withJava()
-  }
-  if (kmpJsEnabled) {
-    js {
-      configure([compilations.main, compilations.test]) {
-        tasks.getByName(compileKotlinTaskName).kotlinOptions {
-          moduleKind = 'umd'
-          sourceMap = true
-          metaInfo = true
+    jvm {
+        withJava()
+    }
+    if (kmpJsEnabled) {
+        js {
+            configure([compilations.main, compilations.test]) {
+                tasks.getByName(compileKotlinTaskName).kotlinOptions {
+                    moduleKind = 'umd'
+                    sourceMap = true
+                    metaInfo = true
+                }
+            }
+            nodejs()
+            browser()
         }
-      }
-      nodejs()
-      browser()
     }
-  }
 
-  sourceSets {
-    commonMain {
-      dependencies {
-        api project(':wire-runtime')
-      }
+    sourceSets {
+        commonMain {
+            dependencies {
+                api project(':wire-runtime')
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation deps.okio.jvm
+                api deps.guava
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation project(':wire-test-utils')
+                implementation deps.junit
+                implementation deps.kotlin.test.junit
+                implementation deps.assertj
+                implementation deps.jimfs
+            }
+        }
+        jsTest {
+            dependencies {
+                implementation deps.kotlin.test.js
+            }
+        }
     }
-    jvmMain {
-      dependencies {
-        implementation deps.okio.jvm
-        api deps.guava
-      }
-    }
-    jvmTest {
-      dependencies {
-        implementation project(':wire-test-utils')
-        implementation deps.junit
-        implementation deps.kotlin.test.junit
-        implementation deps.assertj
-        implementation deps.jimfs
-      }
-    }
-    jsTest {
-      dependencies {
-        implementation deps.kotlin.test.js
-      }
-    }
-  }
 }
 
 jar {
-  manifest {
-    attributes('Automatic-Module-Name': 'wire-schema')
-  }
+    manifest {
+        attributes('Automatic-Module-Name': 'wire-schema')
+    }
 }
 
 apply from: "$rootDir/gradle/gradle-mvn-mpp-push.gradle"
@@ -59,10 +59,22 @@ publishing {
   // Use default artifact name for the JVM target
   publications {
     kotlinMultiplatform {
-      artifactId = 'wire-schema-multiplatform'
+        mavenJava(MavenPublication) {
+            groupId "com.squareup.wire"
+            artifactId = 'wire-schema-multiplatform'
+            version = "3.7.12"
+            artifact jar
+            artifact javadocsJar
+        }
     }
     jvm {
-      artifactId = 'wire-schema'
+        mavenJava(MavenPublication) {
+            groupId "com.squareup.wire"
+            artifactId = 'wire-schema'
+            version = "3.7.12"
+            artifact jar
+            artifact javadocsJar
+        }
     }
   }
 }

@@ -74,13 +74,26 @@ apply from: 'jvm.gradle'
 apply from: "$rootDir/gradle/gradle-mvn-mpp-push.gradle"
 
 publishing {
-  // Use default artifact name for the JVM target
   publications {
     kotlinMultiplatform {
-      artifactId = 'wire-grpc-client-multiplatform'
+      mavenJava(MavenPublication) {
+        groupId "com.squareup.wire"
+        artifactId = 'wire-grpc-client-multiplatform'
+        version = "3.7.12"
+        artifact jar
+        artifact javadocsJar
+      }
     }
     jvm {
-      artifactId = 'wire-grpc-client'
+      kotlinMultiplatform {
+        mavenJava(MavenPublication) {
+          groupId "com.squareup.wire"
+          artifactId = 'wire-grpc-client'
+          version = "3.7.12"
+          artifact jar
+          artifact javadocsJar
+        }
+      }
     }
   }
 }
