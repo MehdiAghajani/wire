@@ -45,20 +45,20 @@ kotlin {
     // See https://youtrack.jetbrains.com/issue/KT-41506.
     withJava()
   }
-  if (kmpJsEnabled) {
-    js {
-      configure(listOf(compilations.getByName("main"), compilations.getByName("test"))) {
-        tasks.getByName(compileKotlinTaskName) {
-          kotlinOptions {
-            moduleKind = "umd"
-            sourceMap = true
-            metaInfo = true
-          }
-        }
-      }
-      nodejs()
-    }
-  }
+//  if (kmpJsEnabled) {
+//    js {
+//      configure(listOf(compilations.getByName("main"), compilations.getByName("test"))) {
+//        tasks.getByName(compileKotlinTaskName) {
+//          kotlinOptions {
+//            moduleKind = "umd"
+//            sourceMap = true
+//            metaInfo = true
+//          }
+//        }
+//      }
+//      nodejs()
+//    }
+//  }
   if (kmpNativeEnabled) {
     iosX64()
     iosArm64()
@@ -91,13 +91,13 @@ kotlin {
         implementation(deps.jimfs)
       }
     }
-    if (kmpJsEnabled) {
-      val jsTest by getting {
-        dependencies {
-          implementation(deps.kotlin.test.js)
-        }
-      }
-    }
+//    if (kmpJsEnabled) {
+//      val jsTest by getting {
+//        dependencies {
+//          implementation(deps.kotlin.test.js)
+//        }
+//      }
+//    }
     if (kmpNativeEnabled) {
       val nativeMain by creating {
         dependsOn(commonMain)

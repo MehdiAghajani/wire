@@ -917,12 +917,12 @@ class WirePluginTest {
   @Test
   fun kotlinMultiplatform() {
     val fixtureRoot = File("src/test/projects/kotlin-multiplatform")
-    val kmpJsEnabled = System.getProperty("kjs", "true")!!.toBoolean()
+//    val kmpJsEnabled = System.getProperty("kjs", "true")!!.toBoolean()
     val kmpNativeEnabled = System.getProperty("knative", "true")!!.toBoolean()
 
     val result = gradleRunner.runFixture(fixtureRoot) {
       withArguments(
-          "assemble", "--stacktrace", "-Dkjs=$kmpJsEnabled", "-Dknative=$kmpNativeEnabled", "--info"
+          "assemble", "--stacktrace",  "-Dknative=$kmpNativeEnabled", "--info"
       ).build()
     }
 

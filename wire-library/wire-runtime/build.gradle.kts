@@ -16,22 +16,22 @@ kotlin {
   jvm {
     withJava()
   }
-  if (kmpJsEnabled) {
-    js {
-      configure(listOf(compilations.getByName("main"), compilations.getByName("test"))) {
-        tasks.getByName(compileKotlinTaskName) {
-          kotlinOptions {
-            moduleKind = "umd"
-            sourceMap = true
-            metaInfo = true
-          }
-        }
-      }
-      nodejs()
-      // TODO(jwilson): fix Okio for JS to support browser() by polyfilling OS.
-      // browser()
-    }
-  }
+//  if (kmpJsEnabled) {
+//    js {
+//      configure(listOf(compilations.getByName("main"), compilations.getByName("test"))) {
+//        tasks.getByName(compileKotlinTaskName) {
+//          kotlinOptions {
+//            moduleKind = "umd"
+//            sourceMap = true
+//            metaInfo = true
+//          }
+//        }
+//      }
+//      nodejs()
+//      // TODO(jwilson): fix Okio for JS to support browser() by polyfilling OS.
+//      // browser()
+//    }
+//  }
   if (kmpNativeEnabled) {
     iosX64()
     iosArm64()
@@ -67,13 +67,13 @@ kotlin {
         implementation(deps.kotlin.test.junit)
       }
     }
-    if (kmpJsEnabled) {
-      val jsTest by getting {
-        dependencies {
-          implementation(deps.kotlin.test.js)
-        }
-      }
-    }
+//    if (kmpJsEnabled) {
+//      val jsTest by getting {
+//        dependencies {
+//          implementation(deps.kotlin.test.js)
+//        }
+//      }
+//    }
     if (kmpNativeEnabled) {
       val nativeMain by creating {
         dependsOn(commonMain)
@@ -115,9 +115,9 @@ afterEvaluate {
   val installLocally by tasks.creating {
     dependsOn("publishKotlinMultiplatformPublicationToTestRepository")
     dependsOn("publishJvmPublicationToTestRepository")
-    if (kmpJsEnabled) {
-      dependsOn("publishJsPublicationToTestRepository")
-    }
+//    if (kmpJsEnabled) {
+//      dependsOn("publishJsPublicationToTestRepository")
+//    }
   }
 }
 
