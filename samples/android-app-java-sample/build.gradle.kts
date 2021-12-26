@@ -28,8 +28,8 @@ wire {
 }
 
 dependencies {
-  implementation("androidx.appcompat:appcompat:1.2.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.0.4")
+  implementation("androidx.appcompat:appcompat:1.4.0")
+  implementation("androidx.constraintlayout:constraintlayout:2.1.2")
 }
 
 buildscript {
@@ -39,7 +39,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath("com.android.tools.build:gradle:3.6.3")
+    classpath("com.android.tools.build:gradle:3.6.4")
     classpath("com.squareup.wire:wire-gradle-plugin")
   }
 }
