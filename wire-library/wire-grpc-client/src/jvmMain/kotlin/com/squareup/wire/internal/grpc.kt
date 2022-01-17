@@ -210,7 +210,7 @@ internal fun GrpcResponse.grpcResponseToException(suppressed: IOException? = nul
         return GrpcException(
             GrpcStatus.get(grpcStatusInt),
             grpcMessage,
-            if (trailers.size == 0) trailers else headers
+            if (trailers.size != 0) trailers else headers
         )
     }
 

@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-Version 4.0.111
+Version 4.0.112
 -------------
 
 * New: return all response headers with GrpcException
