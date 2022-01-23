@@ -210,7 +210,8 @@ internal fun GrpcResponse.grpcResponseToException(suppressed: IOException? = nul
         return GrpcException(
             GrpcStatus.get(grpcStatusInt),
             grpcMessage,
-            if (trailers.size != 0) trailers else headers
+            trailers,
+            headers
         )
     }
 
@@ -221,7 +222,7 @@ internal fun GrpcResponse.grpcResponseToException(suppressed: IOException? = nul
                     " (HTTP status=$code, grpc-status=$grpcStatus, grpc-message=$grpcMessage)"
             )
 
-        return GrpcException(GrpcStatus.get(grpcStatusInt), grpcMessage, trailers)
+        return GrpcException(GrpcStatus.get(grpcStatusInt), grpcMessage, trailers, headers)
     }
 
     return null // Success.

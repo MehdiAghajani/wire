@@ -22,4 +22,5 @@ class GrpcException(
     val grpcStatus: GrpcStatus,
     val grpcMessage: String?,
     val trailers: GrpcHeaders,
+    val headers: GrpcHeaders,
 ) : IOException("grpc-status=${grpcStatus.code}, grpc-status-name=${grpcStatus.name}, grpc-message=$grpcMessage")
